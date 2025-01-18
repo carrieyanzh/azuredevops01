@@ -7,7 +7,7 @@ trigger:
 - demobranch
 
 pool:
-  vmImage: ubuntu-latest
+  name: myRaspberrypi
 
 steps:
 - script: echo Hello, world!
