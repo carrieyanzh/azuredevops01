@@ -7,7 +7,7 @@ trigger:
 - demobranch
 
 pool:
-  name: ubuntu-latest
+  name: myRaspberrypi
 
 steps:
 - script: echo Hello, world!
