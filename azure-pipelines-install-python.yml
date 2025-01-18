@@ -9,11 +9,19 @@ trigger:
 pool:
   name: myRaspberrypi
 
+variables:
+  - name: tag
+    value: '$(Build.BuildNumber)'
+  - name: ImageName
+    value: "demo Image"
+  - name: python.version
+    value: '3.8'
+
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
+    echo $(Date:yyyyMMdd).$(Rev:r)
   displayName: 'Run a multi-line script'
