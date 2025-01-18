@@ -9,17 +9,23 @@ trigger:
 pool:
   name: myRaspberrypi
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
 
-- task: Maven@4
-  inputs:
-    mavenPomFile: "pom.xml"
-    mavenOptions: "-Xmx3072m"
-    javaHomeOption: "JDKVersion"
-    jdkVersionOption: $(jdkVersion)
-    jdkArchitectureOption: "x64"
-    publishJUnitResults: true
-    testResultsFiles: "**/TEST-*.xml"
-    goals: "package"
+steps:
+# Ensure Maven and Java are properly set
+- script: |
+    export JAVA_HOME=/home/pi/.sdkman/candidates/java/17.0.8-tem
+    export PATH=$JAVA_HOME/bin:$PATH
+    export M2_HOME=/opt/maven
+    export PATH=$M2_HOME/bin:$PATH
+    java -version
+    mvn -v
+  displayName: 'Verify Maven and Java Installation'
+
+# Run Maven Package
+- script: |
+    export JAVA_HOME=/home/pi/.sdkman/candidates/java/17.0.8-tem
+    export PATH=$JAVA_HOME/bin:$PATH
+    export M2_HOME=/opt/maven
+    export PATH=$M2_HOME/bin:$PATH
+    mvn -f pom.xml -Xmx3072m package
+  displayName: 'Run Maven Package'
