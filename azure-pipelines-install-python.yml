@@ -16,14 +16,18 @@ variables:
     value: "demo Image"
   - name: python.version
     value: '3.8'
-  - name:  versionnum
+  - name:  VERSIONNUM
     value: '$(Date:yyyyMMdd).$(Rev:r)'
 
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
+  
+- script: printenv
+  displayName: 'Debug Environment Variables'
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
-    echo $(versionnum)
+    echo versionnum $VERSIONNUM
   displayName: 'Run a multi-line script'
+
