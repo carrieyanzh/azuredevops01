@@ -4,6 +4,7 @@ trigger:
 pool:
   name: myRaspberrypi
 
+name: custom-version-$(Date:yyyyMMdd)-$(Rev:r)
 
 variables:
   - name: tag
