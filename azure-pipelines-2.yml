@@ -14,6 +14,24 @@ steps:
   displayName: 'Run a one-line script'
 
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+    sudo apt update
+    sudo apt upgrade -y
+    sudo apt install -y docker.io
+  displayName: 'Install Docker on Raspberry Pi'
+
+# Step 2: Start Docker and enable it to run on startup
+- script: |
+    sudo systemctl enable docker
+    sudo systemctl start docker
+  displayName: 'Start Docker and enable on startup'
+
+# Step 3: Verify Docker installation
+- script: |
+    docker --version
+    sudo systemctl status docker
+  displayName: 'Verify Docker Installation'
+
+# Step 4: (Optional) Add the current user to the Docker group (to run Docker without sudo)
+- script: |
+    sudo usermod -aG docker $USER
+  displayName: 'Add user to Docker group'
