@@ -4,7 +4,7 @@ trigger:
 pool:
   name: myRaspberrypi
 
-name: $(Date:yyyyMMdd).$(Rev:r)  # Set the build number
+#name: $(Date:yyyyMMdd).$(Rev:r)  # Set the build number
 
 variables:
   - name: tag
@@ -25,6 +25,6 @@ steps:
 
 - script: |
     echo Add other tasks to build, test, and deploy your project.
-    echo versionnum $VERSIONNUM
+    echo versionnum is $VERSIONNUM
   displayName: 'Run a multi-line script'
 
