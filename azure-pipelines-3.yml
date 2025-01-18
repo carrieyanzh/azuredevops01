@@ -10,10 +10,27 @@ pool:
   name: myRaspberrypi 
 
 steps:
-- task: Ant@1
-  inputs:
-    buildFile: 'build.xml'
-    options: 
-    publishJUnitResults: true
-    testResultsFiles: '**/TEST-*.xml'
-    javaHomeOption: 'JDKVersion'
+- script: |
+    sudo apt update
+    sudo apt upgrade -y   
+  displayName: 'Install Apache Ant and Maven on Raspberry Pi'
+
+# Step 3: Download and install the latest version of Maven
+- script: |        
+    wget https://dlcdn.apache.org/maven/maven-3/3.9.7/binaries/apache-maven-3.9.7-bin.tar.gz
+    sudo tar -xvzf apache-maven-3.9.7-bin.tar.gz -C /opt
+    sudo ln -s /opt/apache-maven-3.9.7-bin.tar.gz /opt/maven
+  displayName: 'Download and install latest Maven'
+
+# Step 4: Set up Maven environment variables
+- script: |
+    echo "export M2_HOME=/opt/maven" | sudo tee -a /etc/profile.d/maven.sh
+    echo "export MAVEN_HOME=/opt/maven" | sudo tee -a /etc/profile.d/maven.sh
+    echo "export PATH=$PATH:/opt/maven/bin" | sudo tee -a /etc/profile.d/maven.sh
+    source /etc/profile.d/maven.sh
+  displayName: 'Set Maven environment variables'
+
+# Step 5: Verify Maven installation
+- script: |
+    mvn -v
+  displayName: 'Verify Maven installation'
