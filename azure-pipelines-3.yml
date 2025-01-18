@@ -17,20 +17,31 @@ steps:
 
 # Step 3: Download and install the latest version of Maven
 - script: |        
-    wget https://dlcdn.apache.org/maven/maven-3/3.9.7/binaries/apache-maven-3.9.7-bin.tar.gz
-    sudo tar -xvzf apache-maven-3.9.7-bin.tar.gz -C /opt
-    sudo ln -s /opt/apache-maven-3.9.7-bin.tar.gz /opt/maven
+    MAVEN_VERSION=3.9.7
+    wget https://dlcdn.apache.org/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
+    sudo tar -xvzf apache-maven-${MAVEN_VERSION}-bin.tar.gz -C /opt
+    sudo rm -rf /opt/maven
+    sudo ln -s /opt/apache-maven-${MAVEN_VERSION} /opt/maven
   displayName: 'Download and install latest Maven'
 
-# Step 4: Set up Maven environment variables
 - script: |
-    echo "export M2_HOME=/opt/maven" | sudo tee -a /etc/profile.d/maven.sh
-    echo "export MAVEN_HOME=/opt/maven" | sudo tee -a /etc/profile.d/maven.sh
-    echo "export PATH=$PATH:/opt/maven/bin" | sudo tee -a /etc/profile.d/maven.sh
-    source /etc/profile.d/maven.sh
-  displayName: 'Set Maven environment variables'
-
-# Step 5: Verify Maven installation
-- script: |
+    export M2_HOME=/opt/maven
+    export PATH=$PATH:$M2_HOME/bin
     mvn -v
-  displayName: 'Verify Maven installation'
+  displayName: 'Set Maven environment and verify'
+
+- script: |
+    export M2_HOME=/opt/maven
+    export PATH=$PATH:$M2_HOME/bin
+    mvn clean install
+  displayName: 'Run Maven build'
+
+# Step 4: Set up Maven environment variables
+#- script: |
+#    echo "export M2_HOME=/opt/maven" | sudo tee -a /etc/profile.d/maven.sh
+#    echo "export MAVEN_HOME=/opt/maven" | sudo tee -a /etc/profile.d/maven.sh
+#    echo "export PATH=$PATH:/opt/maven/bin" | sudo tee -a /etc/profile.d/maven.sh
+#    source /etc/profile.d/maven.sh
+#  displayName: 'Set Maven environment variables'
+
+
