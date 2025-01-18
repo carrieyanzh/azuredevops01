@@ -1,28 +1,25 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - demobranch
 
 pool:
   name: myRaspberrypi
 
+name: $(Date:yyyyMMdd).$(Rev:r)  # Set the build number
+
 variables:
   - name: tag
-    value: '$(Build.BuildNumber)'
+    value: '$(Build.BuildNumber)'  # Use the resolved build number
   - name: ImageName
     value: "demo Image"
   - name: python.version
     value: '3.8'
   - name: VERSIONNUM
-    value: '$(Date:yyyyMMdd).$(Rev:r)'
+    value: '$(Build.BuildNumber)'  # Use Build.BuildNumber to reference the resolved build name
 
 steps:
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
-  
+
 - script: printenv | grep VERSIONNUM
   displayName: 'Debug VERSIONNUM'
 
