@@ -25,16 +25,12 @@ steps:
   displayName: 'Download and install latest Maven'
 
 - script: |
+    export JAVA_HOME=/home/pi/.sdkman/candidates/java/17.0.8-tem 
     export M2_HOME=/opt/maven
-    export PATH=$PATH:$M2_HOME/bin
+    export PATH=$PATH:$M2_HOME/bin:$JAVA_HOME/bin
+    echo "JAVA_HOME is set to $JAVA_HOME"
     mvn -v
-  displayName: 'Set Maven environment and verify'
-
-- script: |
-    export M2_HOME=/opt/maven
-    export PATH=$PATH:$M2_HOME/bin
-    mvn clean install
-  displayName: 'Run Maven build'
+  displayName: 'Set environment variables and verify Maven'
 
 # Step 4: Set up Maven environment variables
 #- script: |
