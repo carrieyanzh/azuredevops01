@@ -4,7 +4,6 @@ trigger:
 pool:
   name: myRaspberrypi
 
-#name: $(Date:yyyyMMdd).$(Rev:r)  # Set the build number
 
 variables:
   - name: tag
